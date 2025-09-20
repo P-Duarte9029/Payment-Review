@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+    background-color: var(--color-dark-blue);
+}
+
+:root{
+    --color-midnight: #192e41;
+    --color-dark-blue: #05263b;
+    --color-blue-grotto: #0d659d;
+    --color-green: #27AE60;
+    --color-red: #C0392B;
+    --color-white: #f5f5f5;
+    --color-light-blue: #b0c4de;    
+}
+
+:host{
+   
+}
