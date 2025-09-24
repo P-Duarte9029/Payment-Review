@@ -1,12 +1,48 @@
-<div>
-    <h2 id="saldo-negativo">Saldo Negativo</h2>
-    <div>
-        <input type="text" id="text-negative">
-        <button id="create-negative-value"></button>
+<div class="body">
+    <h3 id="balance-type">Saldo Negativo</h3>
+    <h2 id="total-value">R${{valor}}</h2>
+    <div class="add-item">
+        <input type="text" id="text-type">
+        <button id="create-type-value" (click)="showP()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+            </svg>
+        </button>        
     </div>
-    <div>
-        <ul id="list-negative-values">
-
+    <div class="content">
+        <ul id="list-type-values">            
+            <li *ngFor="let item of valueArray">
+                {{ item.info }} - {{ item.value }}
+            </li>
         </ul>
+    </div>
+    <div class="bottom">
+        
+    </div>
+</div>
+
+<div *ngIf="show_pop_up" class="pop-up">
+    <div class="pop-up-content">
+        <h2>Preencha as informações</h2>
+        <label>
+            informações:
+            <textarea [(ngModel)] = "newInfo" rows="4" cols="40"></textarea>            
+        </label>
+        <label>
+            Valor:
+            <input type="number" [(ngModel)] = "newValue">
+        </label>
+        <button (click)="SaveData()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+        </button>
+        <button (click)="closeP()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+        </button>
+
     </div>
 </div>
