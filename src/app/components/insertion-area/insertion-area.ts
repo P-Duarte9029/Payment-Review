@@ -13,8 +13,11 @@ export class InsertionArea {
   valueArray: ValueData[] = [];
   show_pop_up:boolean = false;
 
+  totalV:number = 0;
+
   newInfo:string = "";
   newValue:number = 0;
+
 
   showP(){
     this.show_pop_up = true;
@@ -29,8 +32,29 @@ export class InsertionArea {
     this.closeP();
     this.newInfo = "";
     this.newValue = 0;
+    this.TotalVAlue();
+    this.ColorDef();
   }
 
+
+  TotalVAlue(){    
+    this.totalV = 0;
+    this.valueArray.forEach(num => {
+      this.totalV += num.value;
+    });
+  }
+
+  ColorDef(){
+    document.querySelectorAll(".value-color-definition").forEach(li => {
+      const val = parseFloat(li.textContent);
+
+      if(val > 0)
+        li.classList.add("positive");
+      else
+        li.classList.add("negative");
+    })
+  }
+  
 }
 
 export class ValueData{

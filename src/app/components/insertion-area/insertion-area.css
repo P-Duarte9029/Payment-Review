@@ -22,8 +22,10 @@
 .add-item{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
+
 }
 
 .content{
@@ -71,4 +73,29 @@
   min-width: 300px;
   max-width: 90vw;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+#create-type-value{
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-green);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--color-white);
+}
+
+.positive{
+    color: var(--color-green);
+    font-weight: bold;
+}
+
+.negative{
+    color: var(--color-red);
+    font-weight: bold;
 }
