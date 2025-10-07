@@ -1,6 +1,6 @@
 <div class="body">
   <div class="head-info">
-    <h3 id="balance-type">{{ isToPay ? 'A Pagar' : 'A Receber' }}</h3>
+    <h2 id="balance-type">Total:</h2>
     <h2 id="total-value">R${{ getTotalValue() }}</h2>
   </div>
   <div class="body-content">
@@ -9,28 +9,40 @@
         <div
           *ngFor="let item of items"
           class="item-content"
-          [ngClass]="{ positive: !isToPay, negative: isToPay }"
+          [ngClass]="{ positive: item.type == 'toReceive', negative: item.type == 'toPay' }"
         >
           <span>
             {{ item.info }} | R${{ item.value }}
             {{ item.date | date : 'dd/MM/yyyy' }}
           </span>
           <div>
+            @if(item.type == 'toReceive'){<mat-icon
+              aria-hidden="false"
+              aria-label="Arrow Up"
+              fontIcon="arrow_drop_up"
+            ></mat-icon
+            >} @if(item.type == 'toPay'){<mat-icon
+              aria-hidden="false"
+              aria-label="Arrow Down"
+              fontIcon="arrow_drop_down"
+            ></mat-icon
+            >}
             <button matIconButton [matMenuTriggerFor]="menu">
               <mat-icon class="more-icon">more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item>
-                <mat-icon>trash</mat-icon>
+                <mat-icon>delete</mat-icon>
                 <span>Deletar</span>
               </button>
-              <button mat-menu-item disabled>
+              <button mat-menu-item>
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
               </button>
               <button mat-menu-item>
                 <mat-icon>check_circle</mat-icon>
-                <span>Marcar como pago</span>
+                @if(item.type == 'toReceive'){<span>Marcar como recebido</span>}
+                @if(item.type == 'toPay'){<span>Marcar como pago</span>}                
               </button>
             </mat-menu>
           </div>

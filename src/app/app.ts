@@ -41,8 +41,7 @@ export class App {
   protected readonly title = signal('Payment-Review');
 
   showPopUp: boolean = false;
-  itemsToPay: ValueData[] = [];
-  itemsToReceive: ValueData[] = [];
+  items: ValueData[] = [];
 
   showPopup() {
     this.showPopUp = true;
@@ -53,11 +52,6 @@ export class App {
   }
 
   addItemToList(item: ValueData){
-    if (item.type == 'toPay') {
-      this.itemsToPay.push(item);
-    }
-    if (item.type == 'toReceive') {
-      this.itemsToReceive.push(item);
-    }
+      this.items.push(item);
   }
 }

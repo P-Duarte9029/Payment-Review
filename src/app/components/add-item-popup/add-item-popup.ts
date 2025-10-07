@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, output, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -86,7 +86,7 @@ export class AddItemPopup implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.clearItem();
   }
-  
+
   clearItem() { 
     this.item = {
       info: '',

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,13 +28,14 @@ interface ValueData {
   styleUrl: './list-items.css',
 })
 export class ListItems {
+[x: string]: any;
   @Input() items: ValueData[] = [];
   @Input() isToPay = false;
   @Output() openPopup: EventEmitter<boolean> = new EventEmitter(false);
-  
+
   getTotalValue() {
     let totalValue = 0;
-    this.items.forEach((item: ValueData) => totalValue += item.value);
+    this.items.forEach((item: ValueData) => item.type == 'toReceive'? totalValue += item.value : totalValue -= item.value);
     return totalValue;
   }
 }

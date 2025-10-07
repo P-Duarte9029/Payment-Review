@@ -5,8 +5,8 @@
     </div>
     <div class="pay-options">
       <mat-button-toggle-group [(ngModel)]="item.type">
-        <mat-button-toggle value="toPay">Pagar</mat-button-toggle>
-        <mat-button-toggle value="toReceive">Receber</mat-button-toggle>
+        <mat-button-toggle value="toPay" click="defineIsToPay(false)">Pagar</mat-button-toggle>
+        <mat-button-toggle value="toReceive" >Receber</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     <div>

@@ -21,9 +21,9 @@
 
 #alingment{
   display: flex;
-  gap: 2rem;
-  padding: 20px 40px;
+  padding: 2rem 15rem;
+
   div {
-    width: 50%;
+    width: 100%;
   }
 }
