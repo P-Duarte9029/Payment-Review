@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InsertionArea } from './insertion-area';
+import { ListItems } from './list-items';
 
-describe('InsertionArea', () => {
-  let component: InsertionArea;
-  let fixture: ComponentFixture<InsertionArea>;
+describe('ListItems', () => {
+  let component: ListItems;
+  let fixture: ComponentFixture<ListItems>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InsertionArea]
+      imports: [ListItems]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(InsertionArea);
+    fixture = TestBed.createComponent(ListItems);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

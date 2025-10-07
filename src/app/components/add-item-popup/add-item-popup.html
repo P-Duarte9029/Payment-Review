@@ -1,0 +1,53 @@
+<div *ngIf="showPopup" class="pop-up">
+  <div class="pop-up-content">
+    <div>
+      <h2>Preencha as informações</h2>
+    </div>
+    <div class="pay-options">
+      <mat-button-toggle-group [(ngModel)]="item.type">
+        <mat-button-toggle value="toPay">Pagar</mat-button-toggle>
+        <mat-button-toggle value="toReceive">Receber</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Descricao:</mat-label>
+          <textarea matInput placeholder="Ex. Conta de luz" [(ngModel)]="item.info"></textarea>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Valor</mat-label>
+          <input
+            matInput
+            placeholder="Ex. R$10"
+            [(ngModel)]="item.value"
+            mask="separator.2"
+            [thousandSeparator]="'.'"
+            [decimalMarker]="','"
+            prefix="R$ "
+            type="text"
+            [dropSpecialCharacters]="true"
+          />
+        </mat-form-field>
+      </div>
+      <div class="date-picker">
+        <mat-form-field class="example-full-width">
+          <mat-label>Informe a data:</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="item.date" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="action-buttons">
+      <div>
+        <button matButton="outlined" (click)="close()"><mat-icon>close</mat-icon>Fechar</button>
+      </div>
+      <div>
+        <button matButton="filled" (click)="saveData()"><mat-icon>check</mat-icon>Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

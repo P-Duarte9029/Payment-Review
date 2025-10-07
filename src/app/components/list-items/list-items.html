@@ -1,0 +1,41 @@
+<div class="body">
+  <div class="head-info">
+    <h3 id="balance-type">{{ isToPay ? 'A Pagar' : 'A Receber' }}</h3>
+    <h2 id="total-value">R${{ getTotalValue() }}</h2>
+  </div>
+  <div class="body-content">
+    <div class="content">
+      <div id="list-type-values">
+        <div
+          *ngFor="let item of items"
+          class="item-content"
+          [ngClass]="{ positive: !isToPay, negative: isToPay }"
+        >
+          <span>
+            {{ item.info }} | R${{ item.value }}
+            {{ item.date | date : 'dd/MM/yyyy' }}
+          </span>
+          <div>
+            <button matIconButton [matMenuTriggerFor]="menu">
+              <mat-icon class="more-icon">more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>trash</mat-icon>
+                <span>Deletar</span>
+              </button>
+              <button mat-menu-item disabled>
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>check_circle</mat-icon>
+                <span>Marcar como pago</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

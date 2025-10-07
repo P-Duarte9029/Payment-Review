@@ -1,19 +1,30 @@
 <div class="container">
+  <app-header></app-header>
 
-    <app-header></app-header>
+  <!-- // Shu viadao roubou meu coracao 
+  // Kenshi esteve aqui 🙈🙈🙈🙈🙈 -->
 
-    <div class="input-area">
-        <div class="left-side">
-            <app-insertion-area></app-insertion-area>
-        </div>
-
-    <div class="right-side">
-            <app-insertion-area></app-insertion-area>
-
-        
+  <app-add-item-popup
+    [showPopup]="showPopUp"
+    (closePopup)="closePopup()"
+    (sendItem)="addItemToList($event)"
+  >
+  </app-add-item-popup>
+  <div id="alingment">
+    <div>
+      <app-list-items [items]="itemsToPay" [isToPay]="true"></app-list-items>
     </div>
-    
+    <div>
+      <app-list-items [items]="itemsToReceive" [isToPay]="false"></app-list-items>
+    </div>
+  </div>
 
+  <div class="new-item">
+    <button matFab extended (click)="showPopup()">
+      <mat-icon>add</mat-icon>
+      Novo item
+    </button>
+  </div>
+
+  <router-outlet />
 </div>
-
-<router-outlet />
