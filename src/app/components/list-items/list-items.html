@@ -1,7 +1,12 @@
 <div class="body">
   <div class="head-info">
-    <h2 id="balance-type">Total:</h2>
-    <h2 id="total-value">R${{ getTotalValue() }}</h2>
+    <div class="right">
+      <h2 id="balance-type">Total:</h2>
+      <h2 id="total-value">R${{ getTotalValue() }}</h2>
+    </div>
+    <button matIconButton aria-label="Filter">
+      <mat-icon>filter_alt</mat-icon>
+    </button>
   </div>
   <div class="body-content">
     <div class="content">
@@ -11,11 +16,14 @@
           class="item-content"
           [ngClass]="{ positive: item.type == 'toReceive', negative: item.type == 'toPay' }"
         >
-          <span>
-            {{ item.info }} | R${{ item.value }}
-            {{ item.date | date : 'dd/MM/yyyy' }}
+          <span id="card-order">
+            <div class="left-info">
+              <div>{{ item.info }}</div>
+              <div>{{ item.date | date : 'dd/MM/yy' }}</div>
+            </div>
           </span>
-          <div>
+          <div class="right-info">
+            <div>R${{ item.value }}</div>
             @if(item.type == 'toReceive'){<mat-icon
               aria-hidden="false"
               aria-label="Arrow Up"
@@ -31,18 +39,18 @@
               <mat-icon class="more-icon">more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button mat-menu-item >
                 <mat-icon>delete</mat-icon>
                 <span>Deletar</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item >
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item >
                 <mat-icon>check_circle</mat-icon>
-                @if(item.type == 'toReceive'){<span>Marcar como recebido</span>}
-                @if(item.type == 'toPay'){<span>Marcar como pago</span>}                
+                @if(item.type == 'toReceive'){<span>Marcar como recebido</span>} 
+                @if(item.type == 'toPay'){<span>Marcar como pago</span>}
               </button>
             </mat-menu>
           </div>
