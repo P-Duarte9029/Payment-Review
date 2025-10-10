@@ -1,0 +1,10 @@
+{
+    "Users": [
+        {
+            "id": 1,
+            "name": "admin",
+            "password": "password",
+            "isActive": true
+        }
+    ]
+}
