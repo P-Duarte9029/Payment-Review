@@ -42,6 +42,7 @@ export class Dashboard {
   currentItemToEdit: ValueData | null = null;
 
   openPopUpToAdd(): void{
+    console.log("Tá indo");
     this.currentItemToEdit = null;
     this.showPopUp = true;
   }
