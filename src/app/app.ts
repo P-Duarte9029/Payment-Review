@@ -1,12 +1,14 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Header } from "./components/header/header";
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-  ],
-  template: `<router-outlet />`
+    Header
+],
+  template: `<app-header />  <router-outlet /> <p>teste</p>`
 })
 export class App {
  

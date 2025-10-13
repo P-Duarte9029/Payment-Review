@@ -12,6 +12,7 @@ interface ValueData {
   isPaid: boolean;
   date: Date;
   type: 'toPay' | 'toReceive';
+  id?: string;
 }
 
 @Component({
@@ -32,7 +33,11 @@ export class ListItems {
   @Input() items: ValueData[] = [];
   @Input() isToPay = false;
   @Output() openPopup: EventEmitter<boolean> = new EventEmitter(false);
+  @Output() editItem = new EventEmitter<ValueData>();  
 
+  onEdit(item: ValueData){
+    this.editItem.emit(item);
+  }
   getTotalValue() {
     let totalValue = 0;
     this.items.forEach((item: ValueData) => item.type == 'toReceive'? totalValue += item.value : totalValue -= item.value);

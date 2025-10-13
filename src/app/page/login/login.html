@@ -1,6 +1,16 @@
 <div class="login-container">
   <h2>Login</h2>
+  <div>
+    <label for="username">Usuário:</label>
+    <input type="text" id="username" [(ngModel)]="username" />
+  </div>
+  <div>
+    <label for="password">Senha:</label>
+    <input type="text" id="password" [(ngModel)]="password" />
+  </div>
+  <button (click)="login()">Login</button>
+
   <button>
-    <a routerLink="Dashboard">Dashboard</a>
+    <a routerLink="/dashboard">Dashboard</a>
   </button>
 </div>

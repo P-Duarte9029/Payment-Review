@@ -1,5 +1,4 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
-import { Header } from './../../components/header/header';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,12 +14,12 @@ info: string;
   isPaid: boolean;
   date: Date;
   type: 'toPay' | 'toReceive';
+  id?: string;
 }
 
 @Component({
   selector: 'app-dashboard',
   imports: [
-    Header,
     FormsModule,
     FormsModule,
     CommonModule,
@@ -40,16 +39,35 @@ export class Dashboard {
 
   showPopUp: boolean = false;
   items: ValueData[] = [];
+  currentItemToEdit: ValueData | null = null;
 
-  showPopup() {
+  openPopUpToAdd(): void{
+    this.currentItemToEdit = null;
     this.showPopUp = true;
   }
 
-  closePopup() {
-    this.showPopUp = false;
+  openPopUpToEdit(item: ValueData): void{
+    this.currentItemToEdit = item;
+    this.showPopUp = true;
   }
 
-  addItemToList(item: ValueData) {
-    this.items.push(item);
+  closePopUp(): void {
+    this.showPopUp = false;
+    this.currentItemToEdit = null;
+  }
+
+  handleSave(item: ValueData): void{
+    if(item.id){
+      const index = this.items.findIndex(i => i.id === item.id);
+      if(index !== -1){
+        this.items[index] = item;
+      }
+    }
+    else{
+      item.id = new Date().getTime().toString();
+      this.items.push(item);
+    }
+
+    this.closePopUp();
   }
 }

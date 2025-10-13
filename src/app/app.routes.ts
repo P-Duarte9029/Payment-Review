@@ -9,7 +9,8 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./page/dashboard/dashboard').then(m => m.Dashboard)
+    component: Dashboard,
+    title: "Dashboard"
   },
   {
     path: 'login',

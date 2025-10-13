@@ -1,24 +1,27 @@
 <div class="container">
-  <app-header></app-header>
 
   <!-- // Shu viadao roubou meu coracao 
   // Kenshi esteve aqui 🙈🙈🙈🙈🙈 -->
 
-  <app-add-item-popup
-    [showPopup]="showPopUp"
-    (closePopup)="closePopup()"
-    (sendItem)="addItemToList($event)"
+  @if(showPopUp){
+    <app-add-item-popup
+    [itemToEdit] = "currentItemToEdit"
+    (closePopup)="closePopUp()"
+    (sendItem)="handleSave($event)"
   >
   </app-add-item-popup>
+
+  }
+  
   <div id="alingment">
     <div>
-      <app-list-items [items]="items"></app-list-items>
+      <app-list-items [items]="items" (editItem)="openPopUpToEdit($event)"></app-list-items>
     </div>
   </div>
 
   <div class="new-item">
-    <button matFab extended (click)="showPopup()">
-      <mat-icon>add</mat-icon>
+    <button matFab extended (click)="openPopUpToAdd()">
+      <mat-icon>add</mat-icon>  
       Novo item
     </button>
   </div>

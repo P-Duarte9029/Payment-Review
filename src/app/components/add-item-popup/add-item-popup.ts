@@ -72,39 +72,44 @@ interface ValueData {
   templateUrl: './add-item-popup.html',
   styleUrl: './add-item-popup.css',
 })
-export class AddItemPopup implements OnChanges {
-  item: ValueData = {
-    info: '',
-    value: 0,
-    isPaid: false,
-    date: new Date(),
-    type: 'toPay',
-  };
-  @Input() showPopup: boolean = false;
-  @Output() closePopup: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() sendItem: EventEmitter<ValueData> = new EventEmitter<ValueData>();
+export class AddItemPopup implements OnInit {
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.clearItem();
+  @Input() itemToEdit: ValueData | null = null;
+  @Input() showPopUp: boolean = false;
+  @Output() closePopup = new EventEmitter<boolean>();
+  @Output() sendItem = new EventEmitter<ValueData>();
+
+  item: ValueData = this.getEmptyItem();
+  title = 'Adicionar Item';
+  
+  ngOnInit(): void {
+    if(this.itemToEdit){
+      this.item = {...this.itemToEdit};
+      this.title = 'Editando Item';
+    }
+    else{
+      this.item = this.getEmptyItem();
+      this.title = 'Adicionar Item'
+    }
   }
-
-  clearItem() { 
-    this.item = {
+  
+  getEmptyItem(): ValueData{
+    return{
       info: '',
       value: 0,
       isPaid: false,
       date: new Date(),
-      type: 'toPay',
-    };
+      type: 'toPay'
+
+    }
   }
 
-  saveData() {
+  saveData(): void {
     this.sendItem.emit(this.item);
-    this.closePopup.emit();
-    this.clearItem();
+    this.close();
   }
 
-  close() {
-    this.closePopup.emit(true);
+  close(): void {
+    this.closePopup.emit();
   }
 }
