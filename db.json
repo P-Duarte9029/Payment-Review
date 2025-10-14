@@ -1,14 +1,28 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "username": "admin",
-            "password": "password",
-            "isActive": true
-        }
-    ],
-    
-    "saved-items":[
-        {}
-    ]
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "password",
+      "isActive": true
+    }
+  ],
+  "expenses": [
+    {
+      "id": "1760479617383",
+      "info": "AS",
+      "value": 0,
+      "isPaid": false,
+      "date": "2025-10-14T22:06:55.724Z",
+      "type": "toPay"
+    },
+    {
+      "id": "1760479619790",
+      "info": "ASD",
+      "value": 0,
+      "isPaid": false,
+      "date": "2025-10-14T22:06:57.970Z",
+      "type": "toReceive"
+    }
+  ]
 }

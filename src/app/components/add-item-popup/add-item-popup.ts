@@ -107,7 +107,7 @@ export class AddItemPopup implements OnInit {
   saveData(): void {
     this.sendItem.emit(this.item);
     this.close();
-    
+
   }
 
   close(): void {

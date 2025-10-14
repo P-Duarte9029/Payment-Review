@@ -8,7 +8,7 @@ import { Header } from "./components/header/header";
     RouterOutlet,
     Header
 ],
-  template: `<app-header />  <router-outlet /> <p>teste</p>`
+  template: `<app-header />  <router-outlet />`
 })
 export class App {
  

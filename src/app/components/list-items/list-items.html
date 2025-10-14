@@ -4,9 +4,23 @@
       <h2 id="balance-type">Total:</h2>
       <h2 id="total-value">R${{ getTotalValue() }}</h2>
     </div>
-    <button matIconButton aria-label="Filter">
-      <mat-icon>filter_alt</mat-icon>
-    </button>
+    <div class="date-picker">
+      @if(datePicker){
+      <mat-form-field>
+        <mat-label>Escolha a data de pesquisa</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date" />
+          <input matEndDate placeholder="End date" />
+        </mat-date-range-input>
+        <mat-hint></mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      }
+      <button matIconButton aria-label="Filter" (click)="datePicker = !datePicker" id="filter-btn">
+        <mat-icon>filter_alt</mat-icon>
+      </button>
+    </div>
   </div>
   <div class="body-content">
     <div class="content">
@@ -47,10 +61,10 @@
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
               </button>
-              <button mat-menu-item >
+              <button mat-menu-item>
                 <mat-icon>check_circle</mat-icon>
-                @if(item.type == 'toReceive'){<span>Marcar como recebido</span>} 
-                @if(item.type == 'toPay'){<span>Marcar como pago</span>}
+                @if(item.type == 'toReceive'){<span>Marcar como recebido</span>} @if(item.type ==
+                'toPay'){<span>Marcar como pago</span>}
               </button>
             </mat-menu>
           </div>

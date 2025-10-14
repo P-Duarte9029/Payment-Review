@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { AddItemPopup } from './../../components/add-item-popup/add-item-popup';
 import { ListItems } from './../../components/list-items/list-items';
-import { RemoveItemPopup } from "../../components/remove-item-popup/remove-item-popup";
+import { Expenses } from '../../services/expenses';
 
 interface ValueData {
   info: string;
@@ -30,18 +30,22 @@ interface ValueData {
     MatMenuModule,
     AddItemPopup,
     ListItems,
-    RemoveItemPopup
 ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   protected readonly title = signal('Payment-Review');
 
   showPopUp: boolean = false;
   items: ValueData[] = [];
   currentItemToEdit: ValueData | null = null;
+  private expenses = inject(Expenses);
+
+  async ngOnInit() {
+    this.items = await this.expenses.list();
+  }
 
   openPopUpToAdd(): void {
     this.currentItemToEdit = null;
@@ -59,14 +63,17 @@ export class Dashboard {
   }
 
   handleSave(item: ValueData): void {
+    (item.date as any) = item.date.toISOString();
     if (item.id) {
       const index = this.items.findIndex((i) => i.id === item.id);
       if (index !== -1) {
         this.items[index] = item;
+        this.expenses.update(item);
       }
     } else {
       item.id = new Date().getTime().toString();
       this.items.push(item);
+      this.expenses.create(item);
     }
 
     this.closePopUp();

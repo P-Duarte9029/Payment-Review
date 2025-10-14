@@ -7,6 +7,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { RemoveItemPopup } from '../remove-item-popup/remove-item-popup';
+import { Expenses } from '../../services/expenses';
+import { MatDateRangePicker } from "@angular/material/datepicker";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 interface ValueData {
   info: string;
@@ -26,6 +43,20 @@ interface ValueData {
     MatInputModule,
     MatIconModule,
     MatMenuModule,
+    MatDateRangePicker,
+    MatDatepickerModule
+],
+providers: [
+    MatDatepickerModule,
+    [
+      { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, // Set locale for dd/mm/yyyy
+      {
+        provide: DateAdapter,
+        useClass: MomentDateAdapter,
+        deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+      },
+      { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
   ],
   templateUrl: './list-items.html',
   styleUrl: './list-items.css',
@@ -37,6 +68,8 @@ export class ListItems {
   @Output() openPopup: EventEmitter<boolean> = new EventEmitter(false);
   @Output() editItem = new EventEmitter<ValueData>();
   readonly dialog = inject(MatDialog);
+  private expenses = inject(Expenses);
+  datePicker: boolean = false; 
 
   onEdit(item: ValueData) {
     this.editItem.emit(item);
@@ -52,6 +85,7 @@ export class ListItems {
   deleteItem(item: ValueData): void {
     const index = this.items.findIndex((i) => i.id === item.id);
     this.items.splice(index, 1);
+    this.expenses.delete(item.id as string);
   }
 
   openRemoveItemDialog(item: ValueData): void {
@@ -60,6 +94,14 @@ export class ListItems {
       panelClass: 'modal-alert',
     });
 
-    dialog.afterClosed().subscribe((result) => result.confirmRemove == true ?  this.deleteItem(item) : null);
+    dialog
+      .afterClosed()
+      .subscribe((result) => (result.confirmRemove == true ? this.deleteItem(item) : null));
   }
+
+
 }
+function provideNgxMask(): import("@angular/core").Provider {
+  throw new Error('Function not implemented.');
+}
+

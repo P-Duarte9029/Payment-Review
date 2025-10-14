@@ -145,30 +145,33 @@
   justify-content: space-between;
 }
 
-.right{
+.right {
   display: flex;
   gap: 1rem;
 }
 
-.head-info{
+.head-info {
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
   border-bottom: 3px solid #44474e;
 }
 
-#card-order{
+#card-order {
   display: flex;
   justify-content: space-between;
-  .left-info{
+  .left-info {
     display: flex;
     gap: 2rem;
   }
 }
 
-.right-info{
+.right-info {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
 
+.date-picker{
+  height: 0;
+}
