@@ -1,4 +1,4 @@
-<div *ngIf="showPopUp" class="pop-up">
+<div class="pop-up">
   <div class="pop-up-content">
     <div>
       <h2>Preencha as informações</h2>
@@ -6,7 +6,7 @@
     <div class="pay-options">
       <mat-button-toggle-group [(ngModel)]="item.type">
         <mat-button-toggle value="toPay" click="defineIsToPay(false)">Pagar</mat-button-toggle>
-        <mat-button-toggle value="toReceive" >Receber</mat-button-toggle>
+        <mat-button-toggle value="toReceive">Receber</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     <div>
