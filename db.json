@@ -6,5 +6,9 @@
             "password": "password",
             "isActive": true
         }
+    ],
+    
+    "saved-items":[
+        {}
     ]
 }

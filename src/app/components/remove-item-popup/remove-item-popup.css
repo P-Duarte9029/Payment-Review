@@ -1,0 +1,23 @@
+:root {
+  --color-midnight: #192e41;
+  --color-dark-blue: #05263b;
+  --color-blue-grotto: #0d659d;
+  --color-green: #27ae60;
+  --color-red: #c0392b;
+  --color-white: #f5f5f5;
+  --color-light-blue: #b0c4de;
+}
+
+#pop-up-delete{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-light-blue);
+
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+.btn-delete{
+  border-radius: 3rem;
+}

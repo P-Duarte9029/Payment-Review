@@ -1,0 +1,10 @@
+<div id="pop-up-delete">
+<h2 mat-dialog-title>Apagar conta</h2>
+<mat-dialog-content>
+  Você quer apagar a conta?
+</mat-dialog-content>
+<mat-dialog-actions class="btn-delete">
+  <button matButton mat-dialog-close (click)="closeRemoveItemDialog(false)">Não</button>
+  <button matButton mat-dialog-close cdkFocusInitial (click)="closeRemoveItemDialog(true)">Ok</button>
+</mat-dialog-actions>
+</div>

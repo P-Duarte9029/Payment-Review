@@ -7,9 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { AddItemPopup } from './../../components/add-item-popup/add-item-popup';
 import { ListItems } from './../../components/list-items/list-items';
+import { RemoveItemPopup } from "../../components/remove-item-popup/remove-item-popup";
 
 interface ValueData {
-info: string;
+  info: string;
   value: number;
   isPaid: boolean;
   date: Date;
@@ -29,7 +30,8 @@ info: string;
     MatMenuModule,
     AddItemPopup,
     ListItems,
-  ],
+    RemoveItemPopup
+],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -41,13 +43,12 @@ export class Dashboard {
   items: ValueData[] = [];
   currentItemToEdit: ValueData | null = null;
 
-  openPopUpToAdd(): void{
-    console.log("Tá indo");
+  openPopUpToAdd(): void {
     this.currentItemToEdit = null;
     this.showPopUp = true;
   }
 
-  openPopUpToEdit(item: ValueData): void{
+  openPopUpToEdit(item: ValueData): void {
     this.currentItemToEdit = item;
     this.showPopUp = true;
   }
@@ -57,18 +58,19 @@ export class Dashboard {
     this.currentItemToEdit = null;
   }
 
-  handleSave(item: ValueData): void{
-    if(item.id){
-      const index = this.items.findIndex(i => i.id === item.id);
-      if(index !== -1){
+  handleSave(item: ValueData): void {
+    if (item.id) {
+      const index = this.items.findIndex((i) => i.id === item.id);
+      if (index !== -1) {
         this.items[index] = item;
       }
-    }
-    else{
+    } else {
       item.id = new Date().getTime().toString();
       this.items.push(item);
     }
 
     this.closePopUp();
   }
+
+
 }
