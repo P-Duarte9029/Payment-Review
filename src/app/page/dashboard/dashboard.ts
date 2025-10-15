@@ -63,7 +63,7 @@ export class Dashboard implements OnInit {
   }
 
   handleSave(item: ValueData): void {
-    (item.date as any) = item.date.toISOString();
+    item.date = new Date(item.date);
     if (item.id) {
       const index = this.items.findIndex((i) => i.id === item.id);
       if (index !== -1) {
