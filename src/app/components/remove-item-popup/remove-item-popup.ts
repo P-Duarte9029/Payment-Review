@@ -11,6 +11,11 @@ import { MatDialog, MatDialogActions, MatDialogContent, MatDialogRef } from '@an
 export class RemoveItemPopup {
   readonly dialogRef = inject(MatDialogRef<any>);
 
+  title_msg: string = "Apagar conta";
+  complete_msg: string = "Você quer apagar a conta?";
+  resp_esq: string = "Não";
+  resp_dir: string = "Sim";
+
   closeRemoveItemDialog(confirmRemove: boolean): void{
     this.dialogRef.close({ confirmRemove });
   }

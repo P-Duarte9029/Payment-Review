@@ -1,10 +1,10 @@
 <div id="pop-up-delete">
-<h2 mat-dialog-title>Apagar conta</h2>
+<h2 mat-dialog-title>{{ title_msg }}</h2>
 <mat-dialog-content>
-  Você quer apagar a conta?
+  {{ complete_msg }}
 </mat-dialog-content>
 <mat-dialog-actions class="btn-delete">
-  <button matButton mat-dialog-close (click)="closeRemoveItemDialog(false)">Não</button>
-  <button matButton mat-dialog-close cdkFocusInitial (click)="closeRemoveItemDialog(true)">Ok</button>
+  <button matButton mat-dialog-close (click)="closeRemoveItemDialog(false)">{{ resp_esq }}</button>
+  <button matButton mat-dialog-close cdkFocusInitial (click)="closeRemoveItemDialog(true)">{{ resp_dir }}</button>
 </mat-dialog-actions>
 </div>

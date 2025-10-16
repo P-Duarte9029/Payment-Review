@@ -7,5 +7,14 @@
       "isActive": true
     }
   ],
-  "expenses": []
+  "expenses": [
+    {
+      "id": "1760547906648",
+      "info": "a",
+      "value": 0,
+      "isPaid": false,
+      "date": "2025-10-15T17:05:04.977Z",
+      "type": "toPay"
+    }
+  ]
 }

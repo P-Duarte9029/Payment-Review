@@ -12,6 +12,7 @@ import { MatDateRangePicker } from "@angular/material/datepicker";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatSlideToggleModule, MatSlideToggle } from '@angular/material/slide-toggle';
 
 export const MY_FORMATS = {
   parse: {
@@ -44,7 +45,9 @@ interface ValueData {
     MatIconModule,
     MatMenuModule,
     MatDateRangePicker,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSlideToggle,
+    MatSlideToggleModule
 ],
 providers: [
     MatDatepickerModule,
