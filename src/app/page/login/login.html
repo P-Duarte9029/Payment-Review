@@ -1,16 +1,20 @@
 <div class="login-container">
   <h2>Login</h2>
   <div>
-    <label for="username">Usuário:</label>
-    <input type="text" id="username" [(ngModel)]="username" />
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="exemplo@gmail.com" type="text" id="username" [(ngModel)]="username" />        
+      </mat-form-field>
   </div>
   <div>
-    <label for="password">Senha:</label>
-    <input type="text" id="password" [(ngModel)]="password" />
+    <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput type="text" id="password" [(ngModel)]="password" />        
+      </mat-form-field>
   </div>
   <button (click)="login()">Login</button>
 
   <button>
     <a routerLink="/dashboard">Dashboard</a>
   </button>
-</div>
+</div> 

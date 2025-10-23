@@ -73,6 +73,8 @@ export class ListItems {
   readonly dialog = inject(MatDialog);
   private expenses = inject(Expenses);
   datePicker: boolean = false; 
+  toggleUpArrow: string = "Entrada";
+  toggleDownArrow: string = "Saida";
 
   onEdit(item: ValueData) {
     this.editItem.emit(item);

@@ -191,7 +191,7 @@
 .sliders-arrow{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
 #up{
@@ -200,4 +200,10 @@
 
 #down{
   color: var(--color-red);
+}
+
+.toggler{
+  background-color: #f5f5f5;
+  border: 3px solid;
+  border-radius: 20px;
 }

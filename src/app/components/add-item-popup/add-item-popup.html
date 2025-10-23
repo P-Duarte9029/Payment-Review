@@ -10,13 +10,13 @@
       </mat-button-toggle-group>
     </div>
     <div>
-      <div>
+      <div [ngClass]="{'error': invalidAreaTxt}">
         <mat-form-field class="example-full-width">
           <mat-label>Descricao:</mat-label>
           <textarea matInput placeholder="Ex. Conta de luz" [(ngModel)]="item.info"></textarea>
         </mat-form-field>
       </div>
-      <div>
+      <div [ngClass]="{'error': invalidAreaNum}">
         <mat-form-field class="example-full-width">
           <mat-label>Valor</mat-label>
           <input

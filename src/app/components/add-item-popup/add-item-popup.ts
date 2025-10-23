@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, output, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  output,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +28,7 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { invalid } from 'moment';
 
 export const MY_FORMATS = {
   parse: {
@@ -38,7 +48,7 @@ interface ValueData {
   isPaid: boolean;
   date: Date;
   type: 'toPay' | 'toReceive';
-  id?: string;  //para identificar o item a ser editado
+  id?: string; //para identificar o item a ser editado
 }
 
 @Component({
@@ -73,7 +83,7 @@ interface ValueData {
   styleUrl: './add-item-popup.css',
 })
 export class AddItemPopup implements OnInit {
-
+  
   @Input() itemToEdit: ValueData | null = null;
   @Input() showPopUp: boolean = false;
   @Output() closePopup = new EventEmitter<boolean>();
@@ -81,33 +91,38 @@ export class AddItemPopup implements OnInit {
 
   item: ValueData = this.getEmptyItem();
   title = 'Adicionar Item';
-  
+  invalidAreaTxt = false;
+  invalidAreaNum = false;
+
   ngOnInit(): void {
-    if(this.itemToEdit){
-      this.item = {...this.itemToEdit};
+    if (this.itemToEdit) {
+      this.item = { ...this.itemToEdit };
       this.title = 'Editando Item';
-    }
-    else{
+    } else {
       this.item = this.getEmptyItem();
-      this.title = 'Adicionar Item'
+      this.title = 'Adicionar Item';
     }
   }
-  
-  getEmptyItem(): ValueData{
-    return{
+
+  getEmptyItem(): ValueData {
+    return {
       info: '',
       value: 0,
       isPaid: false,
       date: new Date(),
-      type: 'toPay'
-
-    }
+      type: 'toPay',
+    };
   }
 
   saveData(): void {
-    this.sendItem.emit(this.item);
-    this.close();
-
+    if (this.item.info == '') {
+      this.invalidAreaTxt = true;
+    } else if (this.item.value == 0) {
+      this.invalidAreaNum = true;
+    } else {
+      this.sendItem.emit(this.item);
+      this.close();
+    }
   }
 
   close(): void {
