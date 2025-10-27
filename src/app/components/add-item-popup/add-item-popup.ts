@@ -70,7 +70,7 @@ interface ValueData {
     MatDatepickerModule,
     provideNgxMask(),
     [
-      { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, // Set locale for dd/mm/yyyy
+      { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
       {
         provide: DateAdapter,
         useClass: MomentDateAdapter,
@@ -120,8 +120,21 @@ export class AddItemPopup implements OnInit {
     } else if (this.item.value == 0) {
       this.invalidAreaNum = true;
     } else {
-      this.sendItem.emit(this.item);
-      this.close();
+      try{
+          const savingItem = JSON.stringify(this.itemToEdit);
+          if(this.item.type == 'toPay'){
+            localStorage.setItem('toPay', savingItem)
+            this.sendItem.emit(this.item);
+            this.close();
+          }else{
+            localStorage.setItem('toReceive', savingItem)
+            this.sendItem.emit(this.item);
+            this.close();
+          }
+        }
+        catch(error){
+          console.error('Erro saving item on LocalStorage:', error)
+        }
     }
   }
 

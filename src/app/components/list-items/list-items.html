@@ -40,7 +40,7 @@
     <div class="content">
       <div id="list-type-values">
         <div
-          *ngFor="let item of items"
+          *ngFor="let item of itens"  
           class="item-content"
           [ngClass]="{ positive: item.type == 'toReceive', negative: item.type == 'toPay' }"
         >

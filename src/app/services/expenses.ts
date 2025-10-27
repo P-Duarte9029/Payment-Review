@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 interface ValueData {
   info: string;
@@ -12,26 +10,64 @@ interface ValueData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class Expenses {
-private apiUrl= 'http://localhost:3000/expenses';
-constructor(private http: HttpClient){}
+  private storageKey = 'expenses';
 
-async create(item: ValueData ): Promise<any>{
-  return await this.http.post<ValueData>(this.apiUrl, item).toPromise();
-}
+  private apiUrl = 'http://localhost:3000/expenses';
+  constructor() {
+    if (!localStorage.getItem(this.storageKey)) {
+      localStorage.setItem(this.storageKey, JSON.stringify([]));
+    }
+  }
 
-async update(item: ValueData): Promise<any> {
-  return await this.http.put<ValueData>(`${this.apiUrl}/${item.id}`, item).toPromise();
-}
+  // synchronous helpers (used internally)
+  getAll(): ValueData[] {
+    const data = localStorage.getItem(this.storageKey);
+    return data ? JSON.parse(data) : [];
+  }
 
-async delete(id: string): Promise<any> {
-  return await this.http.delete<void>(`${this.apiUrl}/${id}`).toPromise();
-}
+  getById(id: string): ValueData | undefined {
+    return this.getAll().find(item => item.id === id);
+  }
 
-async list(): Promise<any>{
-  return await this.http.get<ValueData[]>(this.apiUrl).toPromise()
-}
+  add(item: ValueData): void {
+    const itens = this.getAll();
+    itens.push(item);
+    localStorage.setItem(this.storageKey, JSON.stringify(itens));
+  }
+
+  update(updateItem: ValueData): void {
+    const itens = this.getAll().map(item => item.id === updateItem.id ? updateItem : item);
+    localStorage.setItem(this.storageKey, JSON.stringify(itens));
+  }
+
+  delete(id: string): void{
+    const itens = this.getAll().filter(item => item.id !== id);
+    localStorage.setItem(this.storageKey, JSON.stringify(itens));
+  }
+
+  
+
+  async list(): Promise<ValueData[]> {
+    return Promise.resolve(this.getAll());
+  }
+
+  async create(item: ValueData): Promise<ValueData> {
+    this.add(item);
+    return Promise.resolve(item);
+  }
+
+  async updateItem(item: ValueData): Promise<ValueData> {
+    this.update(item);
+    return Promise.resolve(item);
+  }
+
+  async remove(id: string): Promise<void> {
+    this.delete(id);
+    return Promise.resolve();
+  }
+
+
 }

@@ -66,7 +66,7 @@ providers: [
 })
 export class ListItems {
   [x: string]: any;
-  @Input() items: ValueData[] = [];
+  @Input() itens: ValueData[] = [];
   @Input() isToPay = false;
   @Output() openPopup: EventEmitter<boolean> = new EventEmitter(false);
   @Output() editItem = new EventEmitter<ValueData>();
@@ -76,20 +76,26 @@ export class ListItems {
   toggleUpArrow: string = "Entrada";
   toggleDownArrow: string = "Saida";
 
+  constructor(expenses: Expenses){}
+
+  ngOnInit(){
+    this.itens = this.expenses.getAll();
+  }
+
   onEdit(item: ValueData) {
     this.editItem.emit(item);
   }
   getTotalValue() {
     let totalValue = 0;
-    this.items.forEach((item: ValueData) =>
+    this.itens.forEach((item: ValueData) =>
       item.type == 'toReceive' ? (totalValue += item.value) : (totalValue -= item.value)
     );
     return totalValue;
   }
 
   deleteItem(item: ValueData): void {
-    const index = this.items.findIndex((i) => i.id === item.id);
-    this.items.splice(index, 1);
+    const index = this.itens.findIndex((i) => i.id === item.id);
+    this.itens.splice(index, 1);
     this.expenses.delete(item.id as string);
   }
 
