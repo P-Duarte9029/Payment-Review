@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,14 +9,8 @@ import { AddItemPopup } from './../../components/add-item-popup/add-item-popup';
 import { ListItems } from './../../components/list-items/list-items';
 import { Expenses } from '../../services/expenses';
 
-interface ValueData {
-  info: string;
-  value: number;
-  isPaid: boolean;
-  date: Date;
-  type: 'toPay' | 'toReceive';
-  id?: string;
-}
+import { ValueData } from '../../interfaces/value-data.interface';
+  
 
 @Component({
   selector: 'app-dashboard',
@@ -39,12 +33,12 @@ export class Dashboard implements OnInit {
   protected readonly title = signal('Payment-Review');
 
   showPopUp: boolean = false;
-  items: ValueData[] = [];
+  itens: ValueData[] = [];
   currentItemToEdit: ValueData | null = null;
   private expenses = inject(Expenses);
 
   async ngOnInit() {
-    this.items = await this.expenses.list();
+    this.itens = await this.expenses.list();
   }
 
   openPopUpToAdd(): void {
@@ -62,18 +56,23 @@ export class Dashboard implements OnInit {
     this.currentItemToEdit = null;
   }
 
-  handleSave(item: ValueData): void {
+  async handleSave(item: ValueData): Promise<void> {
     item.date = new Date(item.date);
     if (item.id) {
-      const index = this.items.findIndex((i) => i.id === item.id);
+      const index = this.itens.findIndex((i) => i.id === item.id);
       if (index !== -1) {
-        this.items[index] = item;
-        this.expenses.update(item);
+        this.itens[index] = item;
+        await this.expenses.updateItem(item);
+        console.log(item.id, 'updated');
       }
     } else {
       item.id = new Date().getTime().toString();
-      this.items.push(item);
-      this.expenses.create(item);
+      // Do not push into `this.itens` directly — `Expenses` keeps the canonical cache.
+      // Call create which will add the item to the shared cache and storage.
+      await this.expenses.create(item);
+      console.log(item.id, 'created');
+      // refresh local reference in case it's not the same array instance
+      this.itens = await this.expenses.list();
     }
 
     this.closePopUp();

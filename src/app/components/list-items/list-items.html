@@ -18,29 +18,35 @@
       </mat-form-field>
 
       <div class="sliders">
-        <mat-slide-toggle class="toggler" id="up"
-          >{{ toggleUpArrow }}
-         </mat-slide-toggle>
-        <mat-slide-toggle class="toggler" id="down"
-          >{{ toggleDownArrow }}
-        </mat-slide-toggle>
+        <mat-slide-toggle class="toggler" id="up">{{ toggleUpArrow }} </mat-slide-toggle>
+        <mat-slide-toggle class="toggler" id="down">{{ toggleDownArrow }} </mat-slide-toggle>
       </div>
-      
+
       <div class="sliders-arrow">
-        <mat-icon aria-hidden="false" aria-label="Arrow Up" fontIcon="arrow_drop_up" id="up"></mat-icon>
-        <mat-icon aria-hidden="false" aria-label="Arrow Down" fontIcon="arrow_drop_down" id="down"></mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Arrow Up"
+          fontIcon="arrow_drop_up"
+          id="up"
+        ></mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Arrow Down"
+          fontIcon="arrow_drop_down"
+          id="down"
+        ></mat-icon>
       </div>
       }
-      <button matIconButton aria-label="Filter" (click)="datePicker = !datePicker" id="filter-btn">
+      <!--  <button matIconButton aria-label="Filter" (click)="datePicker = !datePicker" id="filter-btn">
         <mat-icon>filter_alt</mat-icon>
-      </button>
+      </button> -->
     </div>
   </div>
   <div class="body-content">
     <div class="content">
       <div id="list-type-values">
         <div
-          *ngFor="let item of itens"  
+          *ngFor="let item of itens"
           class="item-content"
           [ngClass]="{ positive: item.type == 'toReceive', negative: item.type == 'toPay' }"
         >

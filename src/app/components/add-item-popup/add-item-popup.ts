@@ -1,14 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  output,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,7 +19,7 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { invalid } from 'moment';
+import { ValueData } from '../../interfaces/value-data.interface';
 
 export const MY_FORMATS = {
   parse: {
@@ -41,15 +32,6 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
-
-interface ValueData {
-  info: string;
-  value: number;
-  isPaid: boolean;
-  date: Date;
-  type: 'toPay' | 'toReceive';
-  id?: string; //para identificar o item a ser editado
-}
 
 @Component({
   selector: 'app-add-item-popup',
@@ -83,7 +65,6 @@ interface ValueData {
   styleUrl: './add-item-popup.css',
 })
 export class AddItemPopup implements OnInit {
-  
   @Input() itemToEdit: ValueData | null = null;
   @Input() showPopUp: boolean = false;
   @Output() closePopup = new EventEmitter<boolean>();
@@ -117,28 +98,19 @@ export class AddItemPopup implements OnInit {
   saveData(): void {
     if (this.item.info == '') {
       this.invalidAreaTxt = true;
-    } else if (this.item.value == 0) {
-      this.invalidAreaNum = true;
-    } else {
-      try{
-          const savingItem = JSON.stringify(this.itemToEdit);
-          if(this.item.type == 'toPay'){
-            localStorage.setItem('toPay', savingItem)
-            this.sendItem.emit(this.item);
-            this.close();
-          }else{
-            localStorage.setItem('toReceive', savingItem)
-            this.sendItem.emit(this.item);
-            this.close();
-          }
-        }
-        catch(error){
-          console.error('Erro saving item on LocalStorage:', error)
-        }
+      return;
     }
+
+    if (this.item.value <= 0) {
+      this.invalidAreaNum = true;
+      return; 
+    }
+
+    this.sendItem.emit({...this.item, value: this.item.value!});
+    this.close();
   }
 
   close(): void {
-    this.closePopup.emit();
+    this.closePopup.emit(false);
   }
 }

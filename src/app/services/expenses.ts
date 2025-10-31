@@ -1,31 +1,29 @@
 import { Injectable } from '@angular/core';
-
-interface ValueData {
-  info: string;
-  value: number;
-  isPaid: boolean;
-  date: Date;
-  type: 'toPay' | 'toReceive';
-  id?: string;
-}
+import { ValueData } from '../interfaces/value-data.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Expenses {
-  private storageKey = 'expenses';
+  private storageKey = 'Payment-Review-save';
+  private itensCache: ValueData[] = [];
 
-  private apiUrl = 'http://localhost:3000/expenses';
   constructor() {
-    if (!localStorage.getItem(this.storageKey)) {
-      localStorage.setItem(this.storageKey, JSON.stringify([]));
-    }
+    this.itensCache = this.getAllFromStorage();
+  }
+
+  private getAllFromStorage(): ValueData[] {
+    const data = localStorage.getItem(this.storageKey);
+    return data ? JSON.parse(data) : []; 
+  }
+
+  private saveToStorage(): void{
+    localStorage.setItem(this.storageKey, JSON.stringify(this.itensCache))
   }
 
   // synchronous helpers (used internally)
   getAll(): ValueData[] {
-    const data = localStorage.getItem(this.storageKey);
-    return data ? JSON.parse(data) : [];
+    return this.itensCache;
   }
 
   getById(id: string): ValueData | undefined {
@@ -33,19 +31,18 @@ export class Expenses {
   }
 
   add(item: ValueData): void {
-    const itens = this.getAll();
-    itens.push(item);
-    localStorage.setItem(this.storageKey, JSON.stringify(itens));
+    this.itensCache.push(item);
+    this.saveToStorage();
   }
 
   update(updateItem: ValueData): void {
-    const itens = this.getAll().map(item => item.id === updateItem.id ? updateItem : item);
-    localStorage.setItem(this.storageKey, JSON.stringify(itens));
+    this.itensCache = this.itensCache.map(item => item.id === updateItem.id ? updateItem : item);
+    this.saveToStorage();
   }
 
   delete(id: string): void{
-    const itens = this.getAll().filter(item => item.id !== id);
-    localStorage.setItem(this.storageKey, JSON.stringify(itens));
+    this.itensCache = this.itensCache.filter(item => item.id !== id);
+    this.saveToStorage();
   }
 
   

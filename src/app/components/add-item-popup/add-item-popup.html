@@ -21,14 +21,14 @@
           <mat-label>Valor</mat-label>
           <input
             matInput
-            placeholder="Ex. R$10"
+            placeholder="Ex. R$10,50"
             [(ngModel)]="item.value"
             mask="separator.2"
             [thousandSeparator]="'.'"
             [decimalMarker]="','"
             prefix="R$ "
             type="text"
-            [dropSpecialCharacters]="true"
+            [dropSpecialCharacters]="false"         
           />
         </mat-form-field>
       </div>

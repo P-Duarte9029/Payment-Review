@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatSlideToggleModule, MatSlideToggle } from '@angular/material/slide-toggle';
+import { ValueData } from '../../interfaces/value-data.interface';
 
 export const MY_FORMATS = {
   parse: {
@@ -26,14 +27,6 @@ export const MY_FORMATS = {
   },
 };
 
-interface ValueData {
-  info: string;
-  value: number;
-  isPaid: boolean;
-  date: Date;
-  type: 'toPay' | 'toReceive';
-  id?: string;
-}
 
 @Component({
   selector: 'app-list-items',
@@ -76,6 +69,8 @@ export class ListItems {
   toggleUpArrow: string = "Entrada";
   toggleDownArrow: string = "Saida";
 
+  funciona: boolean = true;
+
   constructor(expenses: Expenses){}
 
   ngOnInit(){
@@ -87,9 +82,11 @@ export class ListItems {
   }
   getTotalValue() {
     let totalValue = 0;
-    this.itens.forEach((item: ValueData) =>
-      item.type == 'toReceive' ? (totalValue += item.value) : (totalValue -= item.value)
-    );
+    this.itens.forEach((item: ValueData) => {
+      const value = (item.value);
+      if(value != null)
+      item.type === 'toReceive' ? (totalValue += value) : (totalValue -= value)
+    });
     return totalValue;
   }
 
