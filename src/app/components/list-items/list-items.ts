@@ -84,7 +84,7 @@ export class ListItems {
     let totalValue = 0;
     this.itens.forEach((item: ValueData) => {
       const value = (item.value);
-      if(value != null)
+      if(value != null && item.isPaidReceived === false)
       item.type === 'toReceive' ? (totalValue += value) : (totalValue -= value)
     });
     return totalValue;
@@ -105,6 +105,10 @@ export class ListItems {
     dialog
       .afterClosed()
       .subscribe((result) => (result.confirmRemove == true ? this.deleteItem(item) : null));
+  }
+
+  declareItemPaidReceived(item: ValueData): void{
+    item.isPaidReceived = true;
   }
 
 

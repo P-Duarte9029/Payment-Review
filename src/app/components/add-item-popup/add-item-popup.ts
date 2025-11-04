@@ -94,7 +94,7 @@ export class AddItemPopup implements OnInit {
     return {
       info: '',
       value: '' as unknown as number,
-      isPaid: false,
+      isPaidReceived: false,
       date: new Date(),
       type: 'toPay',
     };

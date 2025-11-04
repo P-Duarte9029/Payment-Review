@@ -48,7 +48,7 @@
         <div
           *ngFor="let item of itens"
           class="item-content"
-          [ngClass]="{ positive: item.type == 'toReceive', negative: item.type == 'toPay' }"
+          [ngClass]="{ positive: item.type == 'toReceive', negative: item.type == 'toPay', removed: item.isPaidReceived }"
         >
           <span id="card-order">
             <div class="left-info">
@@ -81,7 +81,7 @@
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="declareItemPaidReceived(item)">
                 <mat-icon>check_circle</mat-icon>
                 @if(item.type == 'toReceive'){<span>Marcar como recebido</span>} @if(item.type ==
                 'toPay'){<span>Marcar como pago</span>}

@@ -1,7 +1,7 @@
 export interface ValueData {
   info: string;
   value: number;
-  isPaid: boolean;
+  isPaidReceived: boolean;
   date: Date;
   type: 'toPay' | 'toReceive';
   id?: string;
