@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +20,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ValueData } from '../../interfaces/value-data.interface';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 export const MY_FORMATS = {
   parse: {
@@ -47,6 +48,7 @@ export const MY_FORMATS = {
     MatNativeDateModule,
     MatMomentDateModule,
     NgxMaskDirective,
+    MatTooltipModule,
   ],
   providers: [
     MatDatepickerModule,
@@ -67,6 +69,7 @@ export const MY_FORMATS = {
 export class AddItemPopup implements OnInit {
   @Input() itemToEdit: ValueData | null = null;
   @Input() showPopUp: boolean = false;
+  @Input() itens: ValueData[] = [];
   @Output() closePopup = new EventEmitter<boolean>();
   @Output() sendItem = new EventEmitter<ValueData>();
 
@@ -74,6 +77,8 @@ export class AddItemPopup implements OnInit {
   title = 'Adicionar Item';
   invalidAreaTxt = false;
   invalidAreaNum = false;
+  textExists = false;
+  mensageItemExists = "Já existe um item com essa descrição.";
 
   ngOnInit(): void {
     if (this.itemToEdit) {
@@ -88,7 +93,7 @@ export class AddItemPopup implements OnInit {
   getEmptyItem(): ValueData {
     return {
       info: '',
-      value: 0,
+      value: '' as unknown as number,
       isPaid: false,
       date: new Date(),
       type: 'toPay',
@@ -96,18 +101,39 @@ export class AddItemPopup implements OnInit {
   }
 
   saveData(): void {
-    if (this.item.info == '') {
+    const num = this.toNumber(this.item.value); 
+
+    if (num <= 0 || isNaN(num)) {
+      this.invalidAreaNum = true;
+      return;
+    }
+    if(this.item.info == ''){
+      this.invalidAreaTxt = true;
+      return;
+    }
+    
+    this.verifyText(this.item.info);
+    if(this.textExists){
       this.invalidAreaTxt = true;
       return;
     }
 
-    if (this.item.value <= 0) {
-      this.invalidAreaNum = true;
-      return; 
-    }
-
-    this.sendItem.emit({...this.item, value: this.item.value!});
+    this.item.value = num;
+    this.sendItem.emit({ ...this.item });
     this.close();
+  }
+
+  private toNumber(v: any): number {
+    return +String(v)
+      .replace(/R\$|\s/g, '') // remove "R$" e espaços
+      .replace(/\./g, '') // remove separadores de milhar
+      .replace(',', '.') // troca vírgula por ponto
+      .trim();
+  }
+
+  verifyText(txt: string): void {
+    const t = txt.trim().toLowerCase();
+    this.textExists = this.itens.some(i => i.info.toLowerCase() === t);
   }
 
   close(): void {

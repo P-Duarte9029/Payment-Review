@@ -35,7 +35,7 @@ export class Dashboard implements OnInit {
   showPopUp: boolean = false;
   itens: ValueData[] = [];
   currentItemToEdit: ValueData | null = null;
-  private expenses = inject(Expenses);
+  private expenses = inject(Expenses);  
 
   async ngOnInit() {
     this.itens = await this.expenses.list();
@@ -67,11 +67,8 @@ export class Dashboard implements OnInit {
       }
     } else {
       item.id = new Date().getTime().toString();
-      // Do not push into `this.itens` directly — `Expenses` keeps the canonical cache.
-      // Call create which will add the item to the shared cache and storage.
       await this.expenses.create(item);
       console.log(item.id, 'created');
-      // refresh local reference in case it's not the same array instance
       this.itens = await this.expenses.list();
     }
 

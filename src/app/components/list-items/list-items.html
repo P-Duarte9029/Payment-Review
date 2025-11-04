@@ -2,7 +2,7 @@
   <div class="head-info">
     <div class="right">
       <h2 id="balance-type">Total:</h2>
-      <h2 id="total-value">R${{ getTotalValue() }}</h2>
+      <h2 id="total-value">R$ {{ getTotalValue() }}</h2>
     </div>
     <div class="date-picker">
       @if(datePicker){
@@ -57,7 +57,7 @@
             </div>
           </span>
           <div class="right-info">
-            <div>R${{ item.value }}</div>
+            <div>R$ {{ item.value }}</div>
             @if(item.type == 'toReceive'){<mat-icon
               aria-hidden="false"
               aria-label="Arrow Up"

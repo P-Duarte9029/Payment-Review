@@ -5,18 +5,18 @@
     </div>
     <div class="pay-options">
       <mat-button-toggle-group [(ngModel)]="item.type">
-        <mat-button-toggle value="toPay" click="defineIsToPay(false)">Pagar</mat-button-toggle>
+        <mat-button-toggle value="toPay">Pagar</mat-button-toggle>
         <mat-button-toggle value="toReceive">Receber</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     <div>
-      <div [ngClass]="{'error': invalidAreaTxt}">
+      <div [ngClass]="{ error: invalidAreaTxt }" [matTooltip]="textExists ? mensageItemExists : null" matTooltipPosition="below">
         <mat-form-field class="example-full-width">
           <mat-label>Descricao:</mat-label>
           <textarea matInput placeholder="Ex. Conta de luz" [(ngModel)]="item.info"></textarea>
         </mat-form-field>
       </div>
-      <div [ngClass]="{'error': invalidAreaNum}">
+      <div [ngClass]="{ error: invalidAreaNum }">
         <mat-form-field class="example-full-width">
           <mat-label>Valor</mat-label>
           <input
@@ -28,7 +28,7 @@
             [decimalMarker]="','"
             prefix="R$ "
             type="text"
-            [dropSpecialCharacters]="false"         
+            [dropSpecialCharacters]="false"
           />
         </mat-form-field>
       </div>
